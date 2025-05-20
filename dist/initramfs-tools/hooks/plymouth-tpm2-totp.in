@@ -1,0 +1,19 @@
+#!/bin/sh
+
+PREREQ='plymouth'
+prereqs() {
+    echo "$PREREQ"
+}
+
+case $1 in
+    prereqs)
+        prereqs
+        exit 0
+        ;;
+esac
+
+. /usr/share/initramfs-tools/hook-functions
+
+copy_exec @HELPERSDIR@/plymouth-tpm2-totp /bin
+copy_exec @TSS2_TCTI_DEVICE_LIBDIR@/libtss2-tcti-device.so.0
+copy_modules_dir kernel/drivers/char/tpm

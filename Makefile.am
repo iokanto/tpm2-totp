@@ -189,11 +189,16 @@ EXTRA_DIST += dist/dracut/show-tpm2-totp.sh dist/dracut/cleanup-tpm2-totp.sh dis
 
 if HAVE_INITRAMFSTOOLS
 if HAVE_PLYMOUTH
+initramfstools_hooks_SCRIPTS = dist/initramfs-tools/hooks/plymouth-tpm2-totp
+initramfstools_scripts_SCRIPTS = dist/initramfs-tools/scripts/init-premount/plymouth-tpm2-totp
+else
+helpers_SCRIPTS = dist/show-tpm2-totp
 initramfstools_hooks_SCRIPTS = dist/initramfs-tools/hooks/tpm2-totp
 initramfstools_scripts_SCRIPTS = dist/initramfs-tools/scripts/init-premount/tpm2-totp
+initramfstools_scriptscleanup_SCRIPTS = dist/initramfs-tools/scripts/local-bottom/cleanup-tpm2-totp
 endif # HAVE_PLYMOUTH
 endif # HAVE_INITRAMFSTOOLS
-EXTRA_DIST += dist/initramfs-tools/scripts/init-premount/tpm2-totp
+EXTRA_DIST += dist/initramfs-tools/scripts/init-premount/plymouth-tpm2-totp dist/initramfs-tools/scripts/init-premount/tpm2-totp dist/initramfs-tools/scripts/local-bottom/cleanup-tpm2-totp
 
 if HAVE_MKINITCPIO
 helpers_SCRIPTS = dist/show-tpm2-totp

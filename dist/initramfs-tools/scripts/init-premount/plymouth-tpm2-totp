@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PREREQ=''
+PREREQ='plymouth'
 prereqs() {
     echo "$PREREQ"
 }
@@ -12,7 +12,6 @@ case $1 in
         ;;
 esac
 
-# Get nvindex from cmdline
 for arg in $(cat /proc/cmdline); do
     case "$arg" in
         rd.tpm2-totp.nvindex=*)
@@ -21,6 +20,4 @@ for arg in $(cat /proc/cmdline); do
     esac
 done
 
-# Execute script in initramfs
-/bin/show-tpm2-totp ${nvindex:+--nvindex "$nvindex"} &
-echo $! > /tmp/show-tpm2-totp.pid
+/bin/plymouth-tpm2-totp ${nvindex:+--nvindex "$nvindex"} &

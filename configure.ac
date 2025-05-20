@@ -46,6 +46,11 @@ AC_SUBST([helpersdir])
 AX_RECURSIVE_EVAL([$helpersdir], [HELPERSDIR])
 AC_SUBST([HELPERSDIR])
 
+installdir="$bindir"
+AC_SUBST([installdir])
+AX_RECURSIVE_EVAL([$installdir], [INSTALLDIR])
+AC_SUBST([INSTALLDIR])
+
 AC_CONFIG_FILES([Makefile Doxyfile dist/tpm2-totp.pc])
 
 AC_ARG_ENABLE([defaultflags],
@@ -128,8 +133,9 @@ AM_CONDITIONAL(HAVE_INITRAMFSTOOLS, [test -n "$with_initramfstoolsdir" -a "x$wit
 AM_COND_IF([HAVE_INITRAMFSTOOLS],
            [AC_SUBST([initramfstools_hooksdir], [$with_initramfstoolsdir/hooks])
             AC_SUBST([initramfstools_scriptsdir], [$with_initramfstoolsdir/scripts/init-premount])
+            AC_SUBST([initramfstools_scriptscleanupdir], [$with_initramfstoolsdir/scripts/local-bottom])
 ])
-AC_CONFIG_FILES([dist/initramfs-tools/hooks/tpm2-totp])
+AC_CONFIG_FILES([dist/initramfs-tools/hooks/plymouth-tpm2-totp dist/initramfs-tools/hooks/tpm2-totp])
 
 AC_CHECK_PROG([mkinitcpio], [mkinitcpio], [yes])
 AC_ARG_WITH([mkinitcpiodir],

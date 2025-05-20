@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PREREQ='plymouth'
+PREREQ=''
 prereqs() {
     echo "$PREREQ"
 }
@@ -14,6 +14,17 @@ esac
 
 . /usr/share/initramfs-tools/hook-functions
 
-copy_exec @HELPERSDIR@/plymouth-tpm2-totp /bin
+# Some check before generating initramfs
+if [ ! -x "@INSTALLDIR@/tpm2-totp" ]; then
+    echo "E: initramfs-tools: 'tpm2-totp' not installed in system!"    >&2
+    exit 1
+fi
+
+copy_exec @INSTALLDIR@/tpm2-totp /bin
+copy_exec $(command -v date) /bin
+
+# Add script, which executed in initramfs and show TOTP codes
+copy_exec @HELPERSDIR@/show-tpm2-totp /bin
+# Add depends for tpm2-totp, which executed in show-tpm2-totp
 copy_exec @TSS2_TCTI_DEVICE_LIBDIR@/libtss2-tcti-device.so.0
 copy_modules_dir kernel/drivers/char/tpm

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+PREREQ=''
+prereqs() {
+    echo "$PREREQ"
+}
+
+case $1 in
+    prereqs)
+        prereqs
+        exit 0
+        ;;
+esac
+
+# Clean up tpm2-totp script
+kill -s 9 "$(cat /tmp/show-tpm2-totp.pid)" 2>/dev/null
